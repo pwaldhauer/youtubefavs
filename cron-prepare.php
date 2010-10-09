@@ -48,8 +48,8 @@ while(true) {
 		$video->url = (string)$link->href[0];
 		$video->title = (string)$entry['title'];
 		$video->content = (string)$entry['content'];
-		$video->added = $entry['published'];
-		$video->hash = sha1($video->added . $video->title);
+		$video->added = $entry['updated'];
+		$video->hash = sha1($video->url);
 		$video->downloaded = false;
 
 		if(!$yt->exists($video)) {
