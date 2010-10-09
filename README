@@ -3,7 +3,13 @@ knspr-youtubefavs - Readme
 
 A tiny collection of scripts to backup your Youtube favorites onto your private server.
 
-1. Installation
+1. Requirements
+===============
+	1. SSH access to a linux server
+	2. PHP 5.1 with sqlite Extension
+	3. youtube-dl (e.g. Debian package youtube-dl)
+
+2. Installation
 ===============
 
 	1. Upload all files to your server
