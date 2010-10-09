@@ -1,7 +1,28 @@
 <?php
+/******************************************************************************
+ * 
+ * knspr-youtubefavs - some scripts to backup your youtube favs
+ * Copyright (C) 2010 Philipp Waldhauer
+ *
+ * This program is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU General Public License as published by the 
+ * Free Software Foundation; either version 2 of the License, or 
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but 
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with 
+ * this program; if not, write to the Free Software Foundation, Inc., 
+ * 51 Franklin St, Fifth Floor, Boston, MA 02110, USA 
+ * 
+ *****************************************************************************/
 
-define('DATABASE', './data.db');
-definE('SHDIR', './tmp');
+define('DATABASE', dirname(__FILE__) .'/data.db');
+definE('VIDEODIR', dirname(__FILE__) .'/public/videos');
+definE('SHDIR', dirname(__FILE__) .'/tmp');
 
 class Video {
 	public $url;
@@ -19,7 +40,7 @@ class KnsprYoutubeInterface {
 
 		foreach($videos as $video) {
 			$output .= '<li class="video" id="video-'. $video->hash .'">';
-			$output .= '<a class="title" href="#'. $video->hash .'" onclick="showVideo(\''. $video->hash .'\', \''. addslashes(htmlentities($video->title, ENT_COMPAT, 'UTF-8')) .'\', \''. self::myNl2Br(addslashes(htmlentities($video->content, ENT_COMPAT, 'UTF-8'))) .'\'); return false;">'. htmlentities($video->title, ENT_COMPAT, 'UTF-8') .'</a>
+			$output .= '<a class="title" href="#'. $video->hash .'" onclick="knspr.ytf.showVideo(\''. $video->hash .'\', \''. addslashes(htmlentities($video->title, ENT_COMPAT, 'UTF-8')) .'\', \''. self::myNl2Br(addslashes(htmlentities($video->content, ENT_COMPAT, 'UTF-8'))) .'\');">'. htmlentities($video->title, ENT_COMPAT, 'UTF-8') .'</a>
 			<span class="meta">Hinzugefügt am '. date('d.m.Y H:i:s', strtotime($video->added)) .', <a href="'. $video->url .'">Youtube-Link &rarr;</a></span>';
 			$output .= '</li>';
 		}
@@ -42,6 +63,7 @@ class KnsprYoutube {
 
 	public function connect() {
 		$this->pdo = new PDO('sqlite:'. DATABASE);
+		$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
 	public function createTable() {
@@ -49,19 +71,45 @@ class KnsprYoutube {
 			die('No PDO connection');
 		}
 
-		$table = 'CREATE TABLE videos(
+		$tableVideos = 'CREATE TABLE videos(
 			url VARCHAR(255) NOT NULL,
 			title VARCHAR(255) NOT NULL,
 			content text NOT NULL,
 			added DATETIME NOT NULL,
 			hash VARCHAR(100) NOT NULL,
 			downloaded tinyint(1) DEFAULT 0);';
+			
+		$indexVideos = 'CREATE UNIQUE INDEX uniquehash ON videos (hash);';
 
-		$this->pdo->exec($table);
+		$tableConfig = 'CREATE TABLE config(
+			key VARCHAR(255) NOT NULL,
+			value VARCHAR(255) NOT NULL);';
+		
+		$indexConfig = 'CREATE UNIQUE INDEX keyhash ON config(key);';
+		
+		$dataConfig = 'INSERT INTO config VALUES ("username", "");';
 
-		$index = 'CREATE UNIQURE INDEX uniquehash ON videos (hash);';
+		$this->pdo->exec($tableVideos);
+		$this->pdo->exec($tableConfig);		
+		$this->pdo->exec($indexVideos);
+		$this->pdo->exec($indexConfig);
+		$this->pdo->exec($dataConfig);
+	}
+	
+	public function setUsername($username) {
+		$stmt = $this->pdo->prepare('UPDATE config SET value = :value WHERE key = "username"');
+		$stmt->bindParam(':value', $username);
+		
+		$stmt->execute();
+	}
+	
+	public function getUsername() {		
+		$stmt = $this->pdo->prepare('SELECT value FROM config WHERE key = "username"');
+		$stmt->execute();
 
-		$this->pdo->exec($index);
+		$result = $stmt->fetch();
+		
+		return $result['value'];
 	}
 
 	public function insert(Video $video) {
@@ -191,11 +239,13 @@ class KnsprYoutube {
 		}
 
 		$this->createScriptDirectory();
+		
+		$videodir = VIDEODIR;
 
 		$shell = <<<EOF
 #!/bin/bash
 
-youtube-dl -o "videos/{$video->hash}.flv" "$video->url"
+youtube-dl -o "{$videodir}/{$video->hash}.flv" "$video->url"
 
 if [ $? -eq 0 ]; then
 	php cron-afterdownload.php "$video->hash"
@@ -206,7 +256,6 @@ fi
 EOF;
 
 		file_put_contents($this->getFileName($video->hash), $shell);
-		chmod($this->getFileName($video->hash), 0755);
 	}
 
 	public function getFileName($hash) {

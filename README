@@ -1,0 +1,19 @@
+knspr-youtubefavs - Readme
+==========================
+
+A tiny collection of scripts to backup your Youtube favorites onto your private server.
+
+1. Installation
+===============
+
+	1. Upload all files to your server
+	2. Login via ssh, navigate to the chosen directory and execute the install.php.
+			`php install.sh`
+	3. When asked type in your Youtube username 
+	4. Execute the cron-prepare.php. It should print out the titles of all your favorites.
+			`php cron-prepare.php`
+	5. Execute the cron-download.sh. THIS WILL NEED A LOT OF TIME, depending on the number of favorites. Youtube limits the bandwidth for downloads to ~200kb/s. Maybe it's a good idea to start it in a screen.
+			`sh cron-download.sh` or `screen sh cron-download.sh`
+	6. Open up the online viewer in your favorite browser. the downloaded videos should appear in the left column. The number on the upper right corner indicates how many videos are completely downloaded.
+			`http://example.com/youtubefav/public/index.php`
+	7. Optional: Install a cronjob to automatically download new favorites.
