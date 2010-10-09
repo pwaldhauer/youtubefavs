@@ -21,7 +21,7 @@ knspr.ytf.doSearch = function() {
 		$('#list').html(json.list);
 
 		if($('#instant').is(':checked') && json.first != undefined && json.first != null) {		
-			showVideo(json.first.hash, json.first.title, json.first.content);
+			knspr.ytf.showVideo(json.first.hash, json.first.title, json.first.content);
 		}
 
 	});
@@ -32,7 +32,7 @@ knspr.ytf.loadVideo = function(hash) {
 			var json = $.parseJSON(data);
 
 			if(json != undefined && json != null) {
-				showVideo(json.hash, json.title, json.content);
+				knspr.ytf.showVideo(json.hash, json.title, json.content);
 			}
 		});
 }
