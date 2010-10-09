@@ -1,0 +1,226 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+
+
+
+/** Begin **/
+
+body {
+	background: url(bg.png);
+	font-family: Helvetica, sans-serif;
+
+	color: #333;
+}
+
+
+#top {
+	background: #000;
+	margin-bottom: 1em;
+	position: fixed;
+	top: 0;
+	width: 100%;
+
+	color: #ccc;
+	font-size: .9em;
+}
+
+#top .searchForm {
+	float: left;
+}
+
+#top .search {
+	margin: 5px;
+	padding: 5px;
+
+	border: #222 solid 1px;
+	width: 350px;
+
+	background: rgba(255, 255, 255, .2);
+	color: #ddd;
+}
+
+#top .x {
+	font-size: .7em;
+	font-weight: bold;
+	
+	position: absolute;
+	margin-left: -40px;
+	margin-top: 9px;
+
+	color: #ccc;
+	background: #222;
+	-moz-border-radius: 10px;
+	padding: 5px 10px;
+	display: none;
+}
+
+#top .searchForm .check {
+	position: relative;
+	top: 2px;
+}
+
+#top .searchForm label span {
+	border-bottom: 1px #ccc dotted;
+}
+
+#top .info {
+	float: right;
+	padding: 12px;
+}
+
+#list {
+	width: 60%;
+
+	margin: 3em 1em;
+	list-style-type: square;
+}
+
+#list li {
+	margin: 1em 1em;
+}
+
+
+#list .title {
+	display: block;
+	color: #999;
+	text-decoration: none;
+	font-size: 1.2em;
+
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+}
+
+#list .title:hover {
+	color: #ddd;
+}
+
+#list .active .title {
+	color: #880000;
+}
+
+#list .meta {
+	font-size: .7em;
+	color: #555;
+	padding: 0 1em;
+}
+
+#list .meta a {
+	color: #666;
+}
+
+#list .meta a:hover {
+	text-decoration: none;
+}
+
+
+#player {
+	width: 520px;
+	height: 330px;
+
+	background: #000;
+
+	position: fixed;
+	right: 1em;
+	top: 3em;
+
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+}
+
+#description {
+	width: 520px;
+
+	background: rgba(0, 0, 0, .3);
+
+	position: fixed;
+	right: 1em;
+
+	top: 400px;
+}
+
+#description h2 {
+	margin: .5em;
+	font-size: 1.4em;
+	font-weight: bold;
+	color: #aaa;
+}
+
+#description p {
+	font-size: .9em;
+	margin: .5em;
+	color: #aaa;
+	line-height: 135%;
+}
