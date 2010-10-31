@@ -14,7 +14,7 @@ A tiny collection of scripts to backup your Youtube favorites onto your private 
 
 	1. Upload all files to your server
 	2. Login via ssh, navigate to the chosen directory and execute the install.php.
-			`php install.sh`
+			`php install.php`
 	3. When asked type in your Youtube username 
 	4. Execute the cron-prepare.php. It should print out the titles of all your favorites.
 			`php cron-prepare.php`
