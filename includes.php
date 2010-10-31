@@ -20,7 +20,7 @@
  * 
  *****************************************************************************/
 
-define('APPVERSION', '0.5');
+define('APPVERSION', '0.6');
 define('DATABASE', dirname(__FILE__) .'/data.db');
 definE('VIDEODIR', dirname(__FILE__) .'/public/videos');
 definE('SHDIR', dirname(__FILE__) .'/tmp');

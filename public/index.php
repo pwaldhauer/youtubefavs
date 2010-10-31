@@ -92,6 +92,14 @@ $(function() {
 			<label for="instant"><input type="checkbox" class="check" name="instant" id="instant" value="1"/> <span title="Wenn aktiviert, wird das erste zurückgegebene Video automatisch gestartet">Instant-Suche</a></label>
 		</form>
 
+		<ul class="toolbar">
+			<li onclick="javascript:knspr.ytf.playPrevious();"><img src="css/control_rewind.png" alt="previous" title="Previous" /></li>
+			<li onclick="javascript:knspr.ytf.activatePlay();"><img id="control-play" src="css/control_play.png" alt="play" title="Play" /></li>
+			<li onclick="javascript:knspr.ytf.deactivatePlay();"><img id="control-stop" src="css/control_stop.png" alt="stop" title="Stop" /></li>
+			<li onclick="javascript:knspr.ytf.playNext();"><img src="css/control_fastforward.png" alt="forward" title="Next" /></li>
+			<li onclick="javascript:knspr.ytf.toggleRandom();"><img id="control-random" src="css/arrow_switch.png" alt="random" title="Activate Random" /></li>
+		</ul>
+
 		<div class="info">
 		Verfügbare Videos: <?php echo $yt->getCount(true) ?>/<span title="Insgesamt"><?php echo $yt->getCount() ?></span>
 		</div>

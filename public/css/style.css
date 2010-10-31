@@ -138,6 +138,18 @@ body {
 	border-bottom: 1px #ccc dotted;
 }
 
+#top .toolbar {
+	position: absolute;
+	top: 13px;
+	left: 47%;
+
+	list-style-type: none;
+}
+
+#top .toolbar li {
+	display: inline;
+}
+
 #top .info {
 	float: right;
 	padding: 12px;
